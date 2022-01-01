@@ -5,7 +5,7 @@ import { Customer } from './customer';
 
 function ratingRange(min: number, max: number): ValidatorFn {
 
-    return function ratingRange (c: AbstractControl): { [key: string]: boolean } | null {
+    return (c: AbstractControl): { [key: string]: boolean } | null => {
     if (c.value !== null && (isNaN(c.value) || c.value < min || c.value > max )) {
       return { 'range': true };
     }
