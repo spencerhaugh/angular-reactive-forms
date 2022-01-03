@@ -3,15 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormA
 import { debounceTime } from 'rxjs/operators'
 
 import { Customer } from './customer';
-
-function ratingRange(min: number, max: number): ValidatorFn {
-    return (c: AbstractControl): { [key: string]: boolean } | null => {
-    if (c.value !== null && (isNaN(c.value) || c.value < min || c.value > max )) {
-      return { 'range': true };
-    }
-    return null;
-  }
-}
+import { NumbersValidator } from '../../_shared/NumbersValidators'
 
 function emailMatcher (c: AbstractControl): { [key: string]: boolean } | null {
     let emailControl = c.get('email');
@@ -53,7 +45,7 @@ export class CustomerComponent implements OnInit {
       }, {validators: emailMatcher}),
       phone: '',
       notification: 'email',
-      rating: [null, ratingRange(1,5)],
+      rating: [null, NumbersValidator.ratingRange(1,5)],
       sendCatalog: true,
       addressGroup: this.fb.array([ this.buildAddress() ])
     });
