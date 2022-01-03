@@ -4,16 +4,17 @@ import { debounceTime } from 'rxjs/operators'
 
 import { Customer } from './customer';
 import { NumbersValidator } from '../../_shared/NumbersValidators'
+import { EmailValidator } from 'src/_shared/EmailValidators';
 
-function emailMatcher (c: AbstractControl): { [key: string]: boolean } | null {
-    let emailControl = c.get('email');
-    let confirmControl = c.get('confirmEmail');
+// function emailMatcher (c: AbstractControl): { [key: string]: boolean } | null {
+//     let emailControl = c.get('email');
+//     let confirmControl = c.get('confirmEmail');
 
-    if (emailControl?.pristine || confirmControl?.pristine) return null;
-    if (emailControl?.value === confirmControl?.value) return null;
+//     if (emailControl?.pristine || confirmControl?.pristine) return null;
+//     if (emailControl?.value === confirmControl?.value) return null;
 
-    return { 'emailMatch': true }
-  }
+//     return { 'emailMatch': true }
+//   }
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
@@ -42,7 +43,7 @@ export class CustomerComponent implements OnInit {
       emailGroup: this.fb.group({
         email: ['', [Validators.required, Validators.email]],
         confirmEmail: ['', Validators.required]
-      }, {validators: emailMatcher}),
+      }, {validators: EmailValidator.emailMatcher}),
       phone: '',
       notification: 'email',
       rating: [null, NumbersValidator.ratingRange(1,5)],
